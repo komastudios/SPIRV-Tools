@@ -382,15 +382,15 @@ function(spirv_tools_default_target_options target)
   add_dependencies(${target} spirv-tools-build-version core_tables enum_string_mapping extinst_tables)
 endfunction()
 
-# Always build ${SPIRV_TOOLS}-shared. This is expected distro packages, and
-# unlike the other SPIRV_TOOLS target, defaults to hidden symbol visibility.
-add_library(${SPIRV_TOOLS}-shared SHARED ${SPIRV_SOURCES})
-spirv_tools_default_target_options(${SPIRV_TOOLS}-shared)
-set_target_properties(${SPIRV_TOOLS}-shared PROPERTIES CXX_VISIBILITY_PRESET hidden)
-target_compile_definitions(${SPIRV_TOOLS}-shared
-  PRIVATE SPIRV_TOOLS_IMPLEMENTATION
-  PUBLIC SPIRV_TOOLS_SHAREDLIB
-)
+if(BUILD_SHARED_LIBS)
+  add_library(${SPIRV_TOOLS}-shared SHARED ${SPIRV_SOURCES})
+  spirv_tools_default_target_options(${SPIRV_TOOLS}-shared)
+  set_target_properties(${SPIRV_TOOLS}-shared PROPERTIES CXX_VISIBILITY_PRESET hidden)
+  target_compile_definitions(${SPIRV_TOOLS}-shared
+    PRIVATE SPIRV_TOOLS_IMPLEMENTATION
+    PUBLIC SPIRV_TOOLS_SHAREDLIB
+  )
+endif()
 
 if(SPIRV_TOOLS_BUILD_STATIC)
   add_library(${SPIRV_TOOLS}-static STATIC ${SPIRV_SOURCES})
