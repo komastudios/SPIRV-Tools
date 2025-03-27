@@ -406,7 +406,7 @@ if(SPIRV_TOOLS_BUILD_STATIC)
     add_library(${SPIRV_TOOLS} ALIAS ${SPIRV_TOOLS}-static)
   endif()
 
-  set(SPIRV_TOOLS_TARGETS ${SPIRV_TOOLS}-static ${SPIRV_TOOLS}-shared)
+  set(SPIRV_TOOLS_TARGETS ${SPIRV_TOOLS}-static)
 else()
   add_library(${SPIRV_TOOLS} ${SPIRV_TOOLS_LIBRARY_TYPE} ${SPIRV_SOURCES})
   spirv_tools_default_target_options(${SPIRV_TOOLS})
